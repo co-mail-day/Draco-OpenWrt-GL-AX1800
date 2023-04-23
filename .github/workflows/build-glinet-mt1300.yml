@@ -37,7 +37,7 @@ env:
   UPLOAD_WETRANSFER: true
   UPLOAD_RELEASE: true
   TZ: Asia/Shanghai
-  OFFICIAL: false
+  OFFICIAL: true
 
 jobs:
   build:
@@ -76,14 +76,14 @@ jobs:
         cd /workdir/gl-infra-builder
         git config --global user.name "github-actions[bot]"
         git config --global user.email "github-actions[bot]@github.com"
-        python3 setup.py -c configs/config-22.03.0.yml
-        cd /workdir/gl-infra-builder/openwrt-22.03/openwrt-22.03.0
+        python3 setup.py -c configs/config-21.x.yml
+        cd /workdir/gl-infra-builder/openwrt-21.x/openwrt-21.x
         ./scripts/gen_config.py glinet-mt1300 glinet_depends
           git clone https://github.com/gl-inet/glinet4.x.git -b main /workdir/glinet
         ./scripts/feeds update -a
         ./scripts/feeds install -a
         make defconfig
-        cd /workdir/gl-infra-builder/openwrt-22.03/openwrt-22.03.0/files/etc
+        cd /workdir/gl-infra-builder/openwrt-21.x/openwrt-21.x/files/etc
         echo "$(date +"%Y.%m.%d")" >./glversion
 
     - name: run setup.py
